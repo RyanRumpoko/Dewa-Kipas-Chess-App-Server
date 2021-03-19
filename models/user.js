@@ -1,6 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const { hashingPassword } = require("../helpers/bcrypt");
+const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "Email cannot be empty",
           },
+          isEmail: {
+            args: true,
+            msg: "Invalid email format",
+          },
         },
         unique: true,
       },
@@ -40,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             args: true,
             msg: "Password cannot be empty",
+          },
+          len: {
+            args: [6, 200],
+            msg: "Password must have min 6 characters",
           },
         },
       },
@@ -68,10 +76,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.addHook("beforeCreate", (instance, opt) => {
-    instance.password = hashingPassword(instance.password);
+    instance.password = hashPassword(instance.password);
   });
   User.addHook("beforeCreate", (instance, opt) => {
-    instance.pictureUrl = "";
+    instance.pictureUrl = "default";
   });
   User.addHook("beforeCreate", (instance, opt) => {
     instance.eloRating = 0;
