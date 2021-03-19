@@ -9,16 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      History.belongsTo(models.User);
+      History.belongsTo(models.User, { foreignKey: 'playerOne'});
+      History.belongsTo(models.User, { foreignKey: 'playerTwo'});
     }
   }
   History.init(
     {
       playerOne: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       playerTwo: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       status: {
         type: DataTypes.INTEGER,
