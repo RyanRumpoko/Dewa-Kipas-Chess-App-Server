@@ -37,7 +37,7 @@ class UserController {
           throw { name: "INVALID_DATA", message: "invalid email/password" };
         const access_token = generateToken({
           id: user.id,
-          fullname: user.fullname,
+          username: user.username,
           email: user.email,
           role: user.role,
         });
