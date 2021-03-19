@@ -23,99 +23,8 @@ afterAll((done) => {
     });
 });
 
-// Login User
-describe("Login user, route = /login", function () {
-  it("200 success login", function (done) {
-    let body = {
-      email: "admin@mail.com",
-      password: "1234",
-    };
-
-    request(app)
-      .post("/users/login")
-      .send(body)
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        }
-
-        expect(res.status).toEqual(200);
-        expect(typeof res.body).toEqual("object");
-        expect(res.body).toHaveProperty("access_token");
-        expect(typeof res.body.access_token).toEqual("string");
-        done();
-      });
-  });
-
-  it("400 failed login - wrong password", function (done) {
-    let body = {
-      email: "admin@mail.com",
-      password: "7654321",
-    };
-
-    request(app)
-      .post("/users/login")
-      .send(body)
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        }
-
-        expect(res.status).toEqual(400);
-        expect(typeof res.body).toEqual("object");
-        expect(res.body).toHaveProperty("error");
-        expect(typeof res.body.error).toEqual("string");
-        done();
-      });
-  });
-
-  it("404 failed login - email not found", function (done) {
-    let body = {
-      email: "hacktiv@mail.com",
-      password: "1234567",
-    };
-
-    request(app)
-      .post("/users/login")
-      .send(body)
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        }
-
-        expect(res.status).toEqual(404);
-        expect(typeof res.body).toEqual("object");
-        expect(res.body).toHaveProperty("error");
-        expect(typeof res.body.error).toEqual("string");
-        done();
-      });
-  });
-
-  it("400 failed login - email and password are empty", function (done) {
-    let body = {
-      email: "",
-      password: "",
-    };
-
-    request(app)
-      .post("/users/login")
-      .send(body)
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        }
-
-        expect(res.status).toEqual(400);
-        expect(typeof res.body).toEqual("object");
-        expect(res.body).toHaveProperty("error");
-        expect(typeof res.body.error).toEqual("string");
-        done();
-      });
-  });
-});
-
 // users register
-describe.only("register user, route = /users/register", () => {
+describe("register user, route = /users/register", () => {
   it("201 success register", function (done) {
     let body = {
       username: "admin",
@@ -231,6 +140,100 @@ describe.only("register user, route = /users/register", () => {
       });
   });
 });
+
+// Login User
+describe("Login user, route = /login", function () {
+  it("200 success login", function (done) {
+    let body = {
+      email: "admin@mail.com",
+      password: "12345678",
+    };
+
+    request(app)
+      .post("/users/login")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(200);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("access_token");
+        expect(typeof res.body.access_token).toEqual("string");
+        done();
+      });
+  });
+
+  it("400 failed login - wrong password", function (done) {
+    let body = {
+      email: "admin@mail.com",
+      password: "7654321",
+    };
+
+    request(app)
+      .post("/users/login")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+
+  it("404 failed login - email not found", function (done) {
+    let body = {
+      email: "hacktiv@mail.com",
+      password: "1234567",
+    };
+
+    request(app)
+      .post("/users/login")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+
+  it("400 failed login - email and password are empty", function (done) {
+    let body = {
+      email: "",
+      password: "",
+    };
+
+    request(app)
+      .post("/users/login")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+});
+
+
+
 
 //users leader board
 describe("leaderboard user, route = /users/leaderboard", function () {

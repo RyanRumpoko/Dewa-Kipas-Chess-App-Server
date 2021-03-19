@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next) => {
-  console.log(err);
+  console.log(err, ' ini error dari errorhandler');
   let statusCode = 500;
   let errorCode = "UNKNOWN_ERROR";
   let message = "Internal server error";
@@ -31,20 +31,8 @@ module.exports = (err, req, res, next) => {
       message = err.message;
       break;
 
-    case err.name === "INVALID_DATA":
-      statusCode = 400;
-      errorCode = err.name;
-      message = err.message;
-      break;
-
     case err.name === "NOT_AUTHENTICATED":
       statusCode = 401;
-      errorCode = err.name;
-      message = err.message;
-      break;
-
-    case err.name === "NOT_AUTHORIZED":
-      statusCode = 403;
       errorCode = err.name;
       message = err.message;
       break;

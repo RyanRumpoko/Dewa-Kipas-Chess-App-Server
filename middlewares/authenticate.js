@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken")
 
-const auth = (req, res, next) => {
+const authenticate = (req, res, next) => {
   try {
     const access_token = req.headers.access_token
     const decoded = jwt.verify(access_token, process.env.SECRET);
+    console.log(decoded,'<<<<<< salah token');
     req.decoded = decoded
     next()
   } catch (err) {
@@ -11,4 +12,4 @@ const auth = (req, res, next) => {
   }
 }
 
-module.exports = auth
+module.exports = authenticate
