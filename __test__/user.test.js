@@ -10,6 +10,11 @@ beforeAll(() => {
     id: 1,
     email: "admin@mail.com",
   });
+  User.create({
+    username: "testing",
+    email: "testing@mail.com",
+    password: "1234567",
+  });
 });
 
 afterAll((done) => {
@@ -67,6 +72,9 @@ describe("register user, route = /users/register", () => {
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");
+        expect(res.body.error).toEqual("VALIDATION_ERROR");
+        expect(typeof res.body.message).toEqual("object");
+        expect(Array.isArray(res.body.message)).toEqual(true);
         done();
       });
   });
@@ -122,6 +130,30 @@ describe("register user, route = /users/register", () => {
       username: "admin",
       email: "",
       password: "",
+    };
+
+    request(app)
+      .post("/users/register")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+
+  // CONSTRAINT
+  it("400 failed register - email not unique", function (done) {
+    let body = {
+      username: "testing",
+      email: "testing@mail.com",
+      password: "1234567",
     };
 
     request(app)
@@ -230,10 +262,29 @@ describe("Login user, route = /login", function () {
         done();
       });
   });
+
+  it("400 failed login - password are empty", function (done) {
+    let body = {
+      email: "admin@mail.com",
+      password: "",
+    };
+
+    request(app)
+      .post("/users/login")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
 });
-
-
-
 
 //users leader board
 describe("leaderboard user, route = /users/leaderboard", function () {
