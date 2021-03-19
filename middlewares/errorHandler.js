@@ -1,5 +1,5 @@
-module.exports = (err, req, res, next) => {
-  console.log(err, ' ini error dari errorhandler');
+const errHandler = function (err, req, res, next) {
+  // console.log(err, " ini error dari errorhandler");
   let statusCode = 500;
   let errorCode = "UNKNOWN_ERROR";
   let message = "Internal server error";
@@ -13,16 +13,11 @@ module.exports = (err, req, res, next) => {
         message.push(el.message);
       });
       break;
+
     case err.name === "SequelizeUniqueConstraintError":
       statusCode = 400;
       errorCode = err.name;
       message = err.message;
-      break;
-
-    case err.name === "SequelizeForeignKeyConstraintError":
-      statusCode = 400;
-      errorCode = err.name;
-      message = "Category Required";
       break;
 
     case err.name === "INVALID_DATA":
@@ -48,3 +43,5 @@ module.exports = (err, req, res, next) => {
   }
   res.status(statusCode).json({ error: errorCode, message });
 };
+
+module.exports = errHandler;
