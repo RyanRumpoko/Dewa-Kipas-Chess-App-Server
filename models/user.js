@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.History, { foreignKey: 'playerOne'});
-      User.hasMany(models.History, { foreignKey: 'playerTwo'});
+      User.hasMany(models.History, { foreignKey: "playerOne" });
+      User.hasMany(models.History, { foreignKey: "playerTwo" });
     }
   }
   User.init(
@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     instance.password = hashPassword(instance.password);
   });
   User.addHook("beforeCreate", (instance, opt) => {
-    instance.pictureUrl = "default";
+    instance.pictureUrl = `https://avatars.dicebear.com/api/human/${instance.username}.svg`;
   });
   User.addHook("beforeCreate", (instance, opt) => {
     instance.eloRating = 0;
