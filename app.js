@@ -2,6 +2,9 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const express = require("express");
+const http = require('http')
+const socketio = require('socket.io')
+
 const cors = require("cors");
 const router = require("./routes/index");
 const errHandler = require("./middlewares/errorHandler");
@@ -15,4 +18,15 @@ app.use("/", router);
 
 app.use(errHandler);
 
-module.exports = app;
+const server = http.createServer(app)
+const io = socketio(server)
+// console.log(io)
+
+io.on('connection', (client) => {
+  // console.log('connect lhoo', client)
+  console.log('tolonggg bisa connect')
+  // gameLogic.initializeGame(io, client)
+  
+})
+
+module.exports = server;
