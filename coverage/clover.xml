@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1616382201986" clover="3.2.0">
-  <project timestamp="1616382201986" name="All files">
-    <metrics statements="180" coveredstatements="165" conditionals="40" coveredconditionals="31" methods="36" coveredmethods="29" elements="256" coveredelements="225" complexity="0" loc="180" ncloc="180" packages="7" files="14" classes="14"/>
+<coverage generated="1616407214555" clover="3.2.0">
+  <project timestamp="1616407214555" name="All files">
+    <metrics statements="196" coveredstatements="166" conditionals="42" coveredconditionals="31" methods="40" coveredmethods="29" elements="278" coveredelements="226" complexity="0" loc="196" ncloc="196" packages="7" files="14" classes="14"/>
     <package name="server">
-      <metrics statements="18" coveredstatements="18" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="0"/>
+      <metrics statements="34" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="5" coveredmethods="0"/>
       <file name="app.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\app.js">
-        <metrics statements="18" coveredstatements="18" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="0"/>
+        <metrics statements="34" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="5" coveredmethods="0"/>
         <line num="1" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="2" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
@@ -22,8 +22,24 @@
         <line num="19" count="2" type="stmt"/>
         <line num="21" count="2" type="stmt"/>
         <line num="22" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
         <line num="32" count="2" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
       </file>
     </package>
     <package name="server.config">
@@ -78,22 +94,22 @@
         <line num="38" count="1" type="stmt"/>
         <line num="39" count="1" type="stmt"/>
         <line num="46" count="1" type="stmt"/>
-        <line num="50" count="4" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="64" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
+        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
         <line num="83" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="95" count="0" type="stmt"/>
-        <line num="99" count="2" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="105" count="2" type="stmt"/>
       </file>
     </package>
     <package name="server.helpers">

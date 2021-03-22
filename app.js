@@ -56,6 +56,11 @@ io.on('connection', (socket) => {
     console.log(data)
     io.to(data.roomid).emit('enemymove', data)
   })
+
+  socket.on('gameover', function(data) {
+    console.log(data)
+    io.to(data.roomid).emit('youlose')
+  })
 })
 
 module.exports = server;
