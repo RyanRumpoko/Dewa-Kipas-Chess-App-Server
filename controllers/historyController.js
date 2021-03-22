@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 class HistoryController {
   static addHistory(req, res, next) {
     const { playerOne, playerTwo, status } = req.body;
-    if (!playerOne || !playerTwo || !status) {
-      throw { name: "INVALID_DATA", message: "fields cannot be empty" };
-    }
+    // if (!playerOne || !playerTwo || !status) {
+    //   throw { name: "INVALID_DATA", message: "fields cannot be empty" };
+    // }
     History.create({
       playerOne,
       playerTwo,
@@ -19,7 +19,10 @@ class HistoryController {
           status: history.status,
         });
       })
-      .catch((err) => next(err));
+      .catch((err) => {
+        console.log("error addHistory")
+        next(err)
+      });
   }
 
   static findHistoryById(req, res, next) {

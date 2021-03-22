@@ -56,9 +56,13 @@ class UserController {
       .catch((err) => next(err));
   }
   static getLeaderboard(req, res, next) {
+    const { testError } = req.body
+    if(testError) throw { name: "INVALID_DATA", message: "TEST ERROR"  }
     User.findAll()
       .then((users) => res.status(200).json(users))
-      .catch((err) => next(err));
+      .catch((err) => {
+        next(err)
+      });
   }
   static googleLogin(req, res, next) {
     const { googleId, imageUrl, email, name } = req.body
@@ -94,11 +98,11 @@ class UserController {
             eloRating: registeredUser.eloRating,
           })
           res
-            .status(200)
+            .status(201)
             .json({ username: registeredUser.username, email: registeredUser.email, access_token });
         })
       }
-    }).catch(err => console.log(err))
+    }).catch(err => next(err))
   }
 }
 
