@@ -104,15 +104,17 @@ describe("add history route = /histories", function () {
         expect(res.status).toEqual(401);
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
+        expect(res.body).toHaveProperty("message");
         expect(typeof res.body.error).toEqual("string");
+        expect(typeof res.body.message).toEqual("string")
         done();
       });
   });
 
   it("400 failed add history - empty player", function (done) {
     const body = {
-      playerOne: null,
-      playerTwo: null,
+      playerOne: "",
+      playerTwo: "",
       status: 1,
     };
 
@@ -129,14 +131,14 @@ describe("add history route = /histories", function () {
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");
-        expect(typeof res.body.message).toEqual("string");
+        expect(typeof res.body.message).toEqual("object");
         done();
       });
   });
 
   it("400 failed add history - empty player one", function (done) {
     const body = {
-      playerOne: null,
+      playerOne: "",
       playerTwo: id2,
       status: 1,
     };
@@ -161,7 +163,7 @@ describe("add history route = /histories", function () {
   it("400 failed add history - empty player two", function (done) {
     const body = {
       playerOne: id1,
-      playerTwo: null,
+      playerTwo: "",
       status: 1,
     };
 
@@ -186,7 +188,7 @@ describe("add history route = /histories", function () {
     const body = {
       playerOne: id1,
       playerTwo: id2,
-      status: null,
+      status: "",
     };
 
     request(app)

@@ -17,9 +17,21 @@ module.exports = (sequelize, DataTypes) => {
     {
       playerOne: {
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Status cannot be empty",
+          },
+        }
       },
       playerTwo: {
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Status cannot be empty",
+          },
+        }
       },
       status: {
         type: DataTypes.INTEGER,

@@ -37,9 +37,6 @@ const errHandler = function (err, req, res, next) {
       errorCode = err.name;
       message = err.message;
       break;
-
-    default:
-      break;
   }
   res.status(statusCode).json({ error: errorCode, message });
 };

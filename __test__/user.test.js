@@ -191,8 +191,12 @@ describe("Login user, route = /login", function () {
 
         expect(res.status).toEqual(200);
         expect(typeof res.body).toEqual("object");
-        expect(res.body).toHaveProperty("access_token");
-        expect(typeof res.body.access_token).toEqual("string");
+        expect(res.body).toHaveProperty("email");
+        expect(typeof res.body.id).toEqual("number");
+        expect(typeof res.body.email).toEqual("string");
+        expect(typeof res.body.username).toEqual("string")
+        expect(typeof res.body.pictureUrl).toEqual("string")
+        expect(typeof res.body.eloRating).toEqual("number")
         done();
       });
   });
@@ -302,20 +306,113 @@ describe("leaderboard user, route = /users/leaderboard", function () {
         done();
       });
   }),
-    it("401 failed read users - access token not found", function (done) {
-      request(app)
-        .get("/users/leaderboard")
-        // .set('access_token', access_token)
-        .end((err, res) => {
-          if (err) {
-            done(err);
-          }
+  it("401 failed read users - access token not found", function (done) {
+    request(app)
+      .get("/users/leaderboard")
+      // .set('access_token', access_token)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
 
-          expect(res.status).toEqual(401);
-          expect(typeof res.body).toEqual("object");
-          expect(res.body).toHaveProperty("error");
-          expect(typeof res.body.error).toEqual("string");
-          done();
-        });
-    });
+        expect(res.status).toEqual(401);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+  it("500 failed read users - page not found", function (done) {
+    let body = {
+      testError: true
+    }
+
+    request(app)
+      .get("/users/leaderboard")
+      .send(body)
+      .set('access_token', access_token)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        done();
+      });
+  });
 });
+
+describe("Google login, route = /users/googleLogin", function () {
+  it("201 success register new user via googlelogin", function (done) {
+    let body = {
+      name: "dewakipas",
+      email: "dewakipas@mail.com",
+    };
+
+    request(app)
+      .post("/users/googlelogin")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(201);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("username");
+        expect(typeof res.body.username).toEqual("string");
+        expect(res.body).toHaveProperty("email");
+        expect(typeof res.body.email).toEqual("string");
+        done();
+      });
+  });
+
+  it("200 success login via googlelogin", function (done) {
+    let body = {
+      name: "dewakipas",
+      email: "dewakipas@mail.com",
+    };
+
+    request(app)
+      .post("/users/googlelogin")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(200);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("username");
+        expect(typeof res.body.username).toEqual("string");
+        expect(res.body).toHaveProperty("email");
+        expect(typeof res.body.email).toEqual("string");
+        done();
+      });
+  });
+
+  it("400 failed login via googlelogin", function (done) {
+    let body = {
+      name: "dewabujana",
+      email: "",
+    };
+
+    request(app)
+      .post("/users/googlelogin")
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(400);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+
+
+})
