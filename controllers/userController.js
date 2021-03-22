@@ -45,7 +45,14 @@ class UserController {
         });
         res
           .status(200)
-          .json({ username: user.username, email: user.email, access_token });
+          .json({
+            access_token: access_token,
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            pictureUrl: user.pictureUrl,
+            eloRating: user.eloRating,
+          });
       })
       .catch((err) => next(err));
   }

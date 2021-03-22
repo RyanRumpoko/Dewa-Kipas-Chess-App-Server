@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1616181463386" clover="3.2.0">
-  <project timestamp="1616181463386" name="All files">
-    <metrics statements="163" coveredstatements="159" conditionals="38" coveredconditionals="31" methods="31" coveredmethods="29" elements="232" coveredelements="219" complexity="0" loc="163" ncloc="163" packages="7" files="14" classes="14"/>
+<coverage generated="1616407214555" clover="3.2.0">
+  <project timestamp="1616407214555" name="All files">
+    <metrics statements="196" coveredstatements="166" conditionals="42" coveredconditionals="31" methods="40" coveredmethods="29" elements="278" coveredelements="226" complexity="0" loc="196" ncloc="196" packages="7" files="14" classes="14"/>
     <package name="server">
-      <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
-      <file name="app.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\app.js">
-        <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+      <metrics statements="34" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="5" coveredmethods="0"/>
+      <file name="app.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\app.js">
+        <metrics statements="34" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="5" coveredmethods="0"/>
         <line num="1" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="2" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
       </file>
     </package>
     <package name="server.config">
       <metrics statements="4" coveredstatements="4" conditionals="6" coveredconditionals="4" methods="0" coveredmethods="0"/>
-      <file name="config.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\config\config.js">
+      <file name="config.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\config\config.js">
         <metrics statements="4" coveredstatements="4" conditionals="6" coveredconditionals="4" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
@@ -32,8 +53,8 @@
       </file>
     </package>
     <package name="server.controllers">
-      <metrics statements="40" coveredstatements="38" conditionals="15" coveredconditionals="15" methods="15" coveredmethods="13"/>
-      <file name="historyController.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\controllers\historyController.js">
+      <metrics statements="51" coveredstatements="38" conditionals="17" coveredconditionals="15" methods="19" coveredmethods="13"/>
+      <file name="historyController.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\controllers\historyController.js">
         <metrics statements="16" coveredstatements="15" conditionals="7" coveredconditionals="7" methods="6" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -52,37 +73,48 @@
         <line num="39" count="1" type="stmt"/>
         <line num="44" count="2" type="stmt"/>
       </file>
-      <file name="userController.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\controllers\userController.js">
-        <metrics statements="24" coveredstatements="23" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="8"/>
+      <file name="userController.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\controllers\userController.js">
+        <metrics statements="35" coveredstatements="23" conditionals="10" coveredconditionals="8" methods="13" coveredmethods="8"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
-        <line num="6" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="20" count="4" type="stmt"/>
-        <line num="23" count="6" type="stmt"/>
-        <line num="24" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="5" type="stmt"/>
-        <line num="31" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="32" count="2" type="stmt"/>
-        <line num="33" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="37" count="1" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="25" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="32" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="49" count="4" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="58" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="105" count="2" type="stmt"/>
       </file>
     </package>
     <package name="server.helpers">
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="bcrypt.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\helpers\bcrypt.js">
+      <file name="bcrypt.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\helpers\bcrypt.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="2" type="stmt"/>
         <line num="5" count="6" type="stmt"/>
@@ -90,7 +122,7 @@
         <line num="10" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
       </file>
-      <file name="jwt.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\helpers\jwt.js">
+      <file name="jwt.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\helpers\jwt.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
@@ -99,7 +131,7 @@
     </package>
     <package name="server.middlewares">
       <metrics statements="39" coveredstatements="38" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3"/>
-      <file name="authenticate.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\middlewares\authenticate.js">
+      <file name="authenticate.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\middlewares\authenticate.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -111,7 +143,7 @@
         <line num="11" count="3" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
       </file>
-      <file name="errorHandler.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\middlewares\errorHandler.js">
+      <file name="errorHandler.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\middlewares\errorHandler.js">
         <metrics statements="30" coveredstatements="29" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="17" type="stmt"/>
@@ -147,7 +179,7 @@
     </package>
     <package name="server.models">
       <metrics statements="39" coveredstatements="38" conditionals="9" coveredconditionals="6" methods="10" coveredmethods="10"/>
-      <file name="history.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\models\history.js">
+      <file name="history.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\models\history.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -156,7 +188,7 @@
         <line num="16" count="2" type="stmt"/>
         <line num="39" count="2" type="stmt"/>
       </file>
-      <file name="index.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\models\index.js">
+      <file name="index.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\models\index.js">
         <metrics statements="20" coveredstatements="19" conditionals="9" coveredconditionals="6" methods="3" coveredmethods="3"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
@@ -179,7 +211,7 @@
         <line num="44" count="2" type="stmt"/>
         <line num="46" count="2" type="stmt"/>
       </file>
-      <file name="user.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\models\user.js">
+      <file name="user.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\models\user.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -197,8 +229,8 @@
       </file>
     </package>
     <package name="server.routes">
-      <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="historyRouter.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\routes\historyRouter.js">
+      <metrics statements="21" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="historyRouter.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\routes\historyRouter.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -208,7 +240,7 @@
         <line num="7" count="2" type="stmt"/>
         <line num="9" count="2" type="stmt"/>
       </file>
-      <file name="index.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\routes\index.js">
+      <file name="index.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\routes\index.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -217,15 +249,16 @@
         <line num="6" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
       </file>
-      <file name="userRouter.js" path="C:\Users\Asus\Documents\Hactiv8\Phase-3\dewa-kipas-final-project\server\routes\userRouter.js">
-        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="userRouter.js" path="D:\hacktiv8\tugas\phase 3\final-project\per sunday\server\routes\userRouter.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
       </file>
     </package>
   </project>
