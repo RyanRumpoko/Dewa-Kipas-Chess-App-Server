@@ -1,4 +1,4 @@
-const app= require("../app");
+const app = require("../app");
 const port = process.env.PORT || 4000;
 const http = require("http");
 const socketio = require("socket.io");
@@ -16,6 +16,8 @@ const activeRooms = []; // isi nya array of object { roomid, playerOne, playerTw
 
 const users = {};
 
+let roomId;
+
 io.on("connection", (socket) => {
   // console.log('connect lhoo', client)
   // console.log('tolonggg bisa connect')
@@ -23,9 +25,15 @@ io.on("connection", (socket) => {
 
   socket.on("create-room", function (data) {
     // isinya { roomid: '', playerData }
-    console.log(data.roomid, "ini roomid nya create room");
+    // console.log(data.roomid, "ini roomid nya create room");
+    roomId = data.roomid;
     activeRooms.push({ roomid: data.roomid, playerOne: data.playerData });
     socket.join(data.roomid);
+  });
+
+  socket.on("disconnect", () => {
+    // socket.rooms.size === 0
+    console.log("Player leave the room");
   });
 
   socket.on("join-room", function (data) {
@@ -36,9 +44,14 @@ io.on("connection", (socket) => {
     );
     if (selectedRoom) {
       selectedRoom.playerTwo = data.playerData;
+      roomId = selectedRoom.roomid;
       console.log(selectedRoom);
       socket.join(data.roomid);
       io.to(data.roomid).emit("fullroom", { selectedRoom });
+    } else {
+      roomId = data.roomid;
+      activeRooms.push({ roomid: data.roomid, playerOne: data.playerData });
+      socket.join(data.roomid);
     }
   });
 
@@ -71,7 +84,11 @@ io.on("connection", (socket) => {
   socket.on("acceptCall", (data) => {
     io.to(data.to).emit("callAccepted", data.signal);
   });
-});
 
+  socket.on("sendEmot", (data) => {
+    console.log(data, "<<<<<<< CHECK ROOM ID");
+    socket.to(roomId).emit("testing", data);
+  });
+});
 
 server.listen(port, () => console.log("Running on port: ", port));
