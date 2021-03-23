@@ -34,7 +34,6 @@ describe("add history route = /histories", function () {
       password: "password1",
     })
       .then((user) => {
-        console.log(user, "ini harusnya res user1");
         id1 = user.id;
         return User.create({
           username: "player 2",
@@ -43,18 +42,15 @@ describe("add history route = /histories", function () {
         });
       })
       .then((user2) => {
-        console.log(user2, "ini harusnya res user2");
         id2 = user2.id;
         // done()
       })
       .catch((err) => {
-        console.log(err);
         // done(err);
       });
   });
 
   it("201 success add history", function (done) {
-    console.log(id1, id2, "ini id");
     let body = {
       playerOne: id1,
       playerTwo: id2,
@@ -224,7 +220,6 @@ describe("read history by id route = /histories/:id", function () {
       password: "password1",
     })
       .then((user) => {
-        console.log(user, "ini harusnya res user1");
         id1 = user.id;
         return User.create({
           username: "player 2",
@@ -233,28 +228,25 @@ describe("read history by id route = /histories/:id", function () {
         });
       })
       .then((user2) => {
-        console.log(user2, "ini harusnya res user2");
         id2 = user2.id;
         // done()
       })
       .catch((err) => {
-        console.log(err);
         // done(err);
       });
   });
   it("200 success read history by id player", function (done) {
-    console.log(id1, "ini id1 coba read historyy");
-    console.log(access_token, "ini access_token coba read historyy");
+    
     request(app)
       .get(`/histories/${id1}`)
       .set("access_token", access_token)
       .send()
       .end((err, res) => {
         if (err) {
-          console.log(err, "ini error read history");
+          
           done(err);
         }
-        console.log(res, "ini res read history harus sukses");
+        
         expect(res.status).toEqual(200);
         expect(Array.isArray(res.body)).toEqual(true);
         done();
@@ -284,22 +276,16 @@ describe("read history by id route = /histories/:id", function () {
       });
   });
 
-  it("404 failed read history - data not found", function (done) {
-    const body = {
-      playerOne: id1,
-      playerTwo: id2,
-      status: 1,
-    };
+  it("500 failed read history - id not valid", function (done) {
 
     request(app)
-      .get(`/histories/1`)
+      .get(`/histories/adsaf`)
       .set("access_token", access_token)
-      .send()
       .end((err, res) => {
         if (err) {
           done(err);
         }
-        expect(res.status).toEqual(404);
+        expect(res.status).toEqual(500);
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");

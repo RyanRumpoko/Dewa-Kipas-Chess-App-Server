@@ -86,10 +86,10 @@ module.exports = (sequelize, DataTypes) => {
     instance.password = hashPassword(instance.password);
   });
   User.addHook("beforeCreate", (instance, opt) => {
-    instance.pictureUrl = `https://avatars.dicebear.com/api/human/${instance.username}.svg`;
+    instance.pictureUrl = `https://avatars.dicebear.com/api/bottts/${instance.username}.svg`;
   });
   User.addHook("beforeCreate", (instance, opt) => {
-    instance.eloRating = 0;
+    instance.eloRating = 1000;
   });
   return User;
 };
