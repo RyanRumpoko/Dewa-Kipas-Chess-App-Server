@@ -81,9 +81,13 @@ class UserController {
             eloRating: user.eloRating,
           });
           console.log(access_token, "?????????????????????");
-          res
-            .status(200)
-            .json({ username: user.username, email: user.email, access_token });
+          res.status(200).json({
+            username: user.username,
+            email: user.email,
+            access_token,
+            id: user.id,
+            pictureUrl: user.pictureUrl,
+          });
         } else {
           return User.create({
             username: name,
@@ -102,6 +106,8 @@ class UserController {
               username: registeredUser.username,
               email: registeredUser.email,
               access_token,
+              id: registeredUser.id,
+              pictureUrl: registeredUser.pictureUrl,
             });
           });
         }
