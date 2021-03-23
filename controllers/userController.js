@@ -56,11 +56,13 @@ class UserController {
   }
 
   static getLeaderboard(req, res, next) {
-    User.findAll()
-      .then((users) => res.status(200).json(users))
-      .catch((err) => {
-        next(err);
-      });
+    User.findAll({
+      order: [['eloRating', 'DESC']]
+    })
+    .then((users) => res.status(200).json(users))
+    .catch((err) => {
+      next(err);
+    });
   }
   static googleLogin(req, res, next) {
     const { googleId, imageUrl, email, name } = req.body;
