@@ -58,8 +58,6 @@ class UserController {
 
 
   static getLeaderboard(req, res, next) {
-    const { testError } = req.body;
-    if (testError) throw { name: "INVALID_DATA", message: "TEST ERROR" };
     User.findAll()
       .then((users) => res.status(200).json(users))
       .catch((err) => {
@@ -82,7 +80,6 @@ class UserController {
             pictureUrl: user.pictureUrl,
             eloRating: user.eloRating,
           });
-          console.log(access_token, "?????????????????????");
           res
             .status(200)
             .json({ username: user.username, email: user.email, access_token });
@@ -92,7 +89,6 @@ class UserController {
             email,
             password: "defaultPassword",
           }).then((registeredUser) => {
-            console.log(registeredUser, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             const access_token = generateToken({
               id: registeredUser.id,
               username: registeredUser.username,
@@ -111,14 +107,14 @@ class UserController {
         }
       })
       .catch((err) => next(err));
-<<<<<<< HEAD
   }
 
-  static async putUserScore(req, res) {
+  static async putUserScore(req, res, next) {
     let { id, eloRating } = req.body;
+
     try {
       let editedUser = await User.update({ eloRating },{
-        where: { id: userid },
+        where: { id: id },
         returning: true
       })
       if (editedUser[0] == 1) {
@@ -129,8 +125,7 @@ class UserController {
     } catch (err) {
       next(err)
     }
-=======
->>>>>>> a22e2d85f6c267d872fee72b2d9963a5ab84bda9
+
   }
 }
 
