@@ -121,7 +121,7 @@ class UserController {
       let editedUser = await User.update(
         { eloRating },
         {
-          where: { id: userid },
+          where: { id },
           returning: true,
         }
       );
