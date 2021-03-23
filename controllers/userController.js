@@ -111,6 +111,7 @@ class UserController {
         }
       })
       .catch((err) => next(err));
+<<<<<<< HEAD
   }
 
   static async putUserScore(req, res) {
@@ -128,6 +129,8 @@ class UserController {
     } catch (err) {
       next(err)
     }
+=======
+>>>>>>> a22e2d85f6c267d872fee72b2d9963a5ab84bda9
   }
 }
 
