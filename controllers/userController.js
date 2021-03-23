@@ -56,9 +56,9 @@ class UserController {
   }
 
   static getLeaderboard(req, res, next) {
-    const { testError } = req.body;
-    if (testError) throw { name: "INVALID_DATA", message: "TEST ERROR" };
-    User.findAll()
+    User.findAll({
+      order: [["eloRating", "DESC"]],
+    })
       .then((users) => res.status(200).json(users))
       .catch((err) => {
         next(err);
