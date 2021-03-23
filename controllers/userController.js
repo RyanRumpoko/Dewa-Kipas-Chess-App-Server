@@ -114,7 +114,7 @@ class UserController {
 
     try {
       let editedUser = await User.update({ eloRating },{
-        where: { id: id },
+        where: { id },
         returning: true
       })
       if (editedUser[0] == 1) {
@@ -123,9 +123,9 @@ class UserController {
         throw { name: "NOT_FOUND", message: "data not found" }
       }
     } catch (err) {
+      console.log(err)
       next(err)
     }
-
   }
 }
 
