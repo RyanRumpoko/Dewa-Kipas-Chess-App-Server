@@ -276,22 +276,16 @@ describe("read history by id route = /histories/:id", function () {
       });
   });
 
-  it("404 failed read history - data not found", function (done) {
-    const body = {
-      playerOne: id1,
-      playerTwo: id2,
-      status: 1,
-    };
+  it("500 failed read history - id not valid", function (done) {
 
     request(app)
-      .get(`/histories/1`)
+      .get(`/histories/adsaf`)
       .set("access_token", access_token)
-      .send()
       .end((err, res) => {
         if (err) {
           done(err);
         }
-        expect(res.status).toEqual(404);
+        expect(res.status).toEqual(500);
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");

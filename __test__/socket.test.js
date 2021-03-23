@@ -1,5 +1,5 @@
 const io = require('socket.io-client')
-const server = require('../socketConfig');
+const { server } = require('../bin/http');
 
 describe('Suite of unit tests', function () {
   //ngejalain servernya
@@ -22,7 +22,7 @@ describe('Suite of unit tests', function () {
     });
   });
 
-  afterEach(function (done) {
+  afterEach( function (done) {
     // Cleanup
     if (socket.connected) {
       console.log('disconnecting...');
@@ -38,7 +38,7 @@ describe('Suite of unit tests', function () {
     server.detach()
   })
 
-  describe('Chat tests', () => {
+  describe('Chat tests', function() {
     // test('join-room - to battle ground chess', (done) => {
     //   const data1 = {
     //     roomid: 'dewa-kipas-54312',
@@ -75,16 +75,27 @@ describe('Suite of unit tests', function () {
     //   })
       test('move - to battle ground chess', (done) => {
         const data = {
-          roomid: 'dewa-kipas-54312'
+          roomid: 'dewa-kipas-54312',
+          move: 'e2 e4'
         }
 
         socket.emit('move', data)
-        
-        socket.on('move', dataRes => {
+
+        socket.on('enemymove', dataRes => {
+          console.log(dataRes, 'ini data ressssssssssssssssssssssssssssssssssssssssssssssss')
           expect(dataRes).toBeInstanceOf(Object)
           expect(dataRes).toHaveProperty('roomid')
           done()
         })
+        // try {
+        //   const dataRes = await socket.on('enemymove')
+        //   console.log(dataRes, 'ini data ressssssssssssssssssssssssssssssssssssssssssssssss')
+        //   expect(Array.isArray(dataRes)).toEqual(false)
+        //   done()
+        // } catch (error) {
+        //   console.log(error)
+        //   done(error)
+        // }
       })
 
     })
