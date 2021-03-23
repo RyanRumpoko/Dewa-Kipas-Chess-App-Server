@@ -3,6 +3,7 @@ const port = process.env.PORT || 4000;
 const http = require("http");
 const socketio = require("socket.io");
 
+const { v4: uuidv4 } = require('uuid')
 const server = http.createServer(app);
 
 const io = socketio(server, {
@@ -13,15 +14,12 @@ const io = socketio(server, {
 });
 
 let activeRooms = []; // isi nya array of object { roomid, playerOne, playerTwo }
-
+let queueMatchmaking = []
 let users = {};
 
 let roomId;
 
 io.on("connection", (socket) => {
-  // console.log('connect lhoo', client)
-  // console.log('tolonggg bisa connect')
-  // gameLogic.initializeGame(io, client)
 
   socket.on("create-room", function (data) {
     // isinya { roomid: '', playerData }
@@ -29,11 +27,6 @@ io.on("connection", (socket) => {
     roomId = data.roomid;
     activeRooms.push({ roomid: data.roomid, playerOne: data.playerData });
     socket.join(data.roomid);
-  });
-
-  socket.on("disconnect", () => {
-    // socket.rooms.size === 0
-    console.log("Player leave the room");
   });
 
   socket.on("join-room", function (data) {
@@ -54,6 +47,29 @@ io.on("connection", (socket) => {
       socket.join(data.roomid);
     }
   });
+  socket.on("matchmaking", function (data) {
+    console.log(data, 'join matchmaking')
+    queueMatchmaking.push({socket, data})
+    if(queueMatchmaking.length % 2 === 0) {
+      setTimeout(() => {
+        let uuid = uuidv4();
+        queueMatchmaking.sort((a,b) => b.eloRating - a.eloRating)
+        const indexPlayer = queueMatchmaking.findIndex(user => user.data.id === data.id)
+        socket.join(uuid)
+        queueMatchmaking[indexPlayer - 1].socket.join(uuid)
+        activeRooms.push({ roomid: uuid, playerOne: data, playerTwo: queueMatchmaking[indexPlayer - 1].data });
+        console.log(activeRooms, 'ini isi active rooms')
+        io.to(uuid).emit("matchStart", {
+          roomid: uuid,
+          playerOne: data,
+          playerTwo: queueMatchmaking[indexPlayer - 1].data
+        })
+        console.log(queueMatchmaking, 'ini isi queuematchmaking')
+        queueMatchmaking.splice(indexPlayer-1, 2)
+      }, 5000);
+    }
+    
+  })
 
   socket.on("move", function (data) {
     console.log(data);
@@ -79,6 +95,7 @@ io.on("connection", (socket) => {
   io.sockets.emit("allUsers", users);
 
   socket.on("disconnect", () => {
+    console.log('player disconnected')
     delete users[socket.id];
   });
 
