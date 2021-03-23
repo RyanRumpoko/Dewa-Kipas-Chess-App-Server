@@ -1,4 +1,4 @@
-const { History } = require("../models");
+const { History, User } = require("../models");
 const { Op } = require("sequelize");
 class HistoryController {
   static addHistory(req, res, next) {
@@ -20,27 +20,56 @@ class HistoryController {
         });
       })
       .catch((err) => {
-        console.log("error addHistory")
-        next(err)
+        console.log("error addHistory");
+        next(err);
       });
   }
 
-  static findHistoryById(req, res, next) {
-    History.findAll({
-      where: {
-        [Op.or]: [{ playerOne: +req.params.id }, { playerTwo: +req.params.id }],
-      },
-    })
-      .then((histories) => {
-        console.log("masuk oke");
-        if (histories.length === 0)
-          throw { name: "NOT_FOUND", message: "data not found" };
-        res.status(200).json(histories);
-      })
-      .catch((err) => {
-        console.log("masuk error");
-        next(err);
+  static async findHistoryById(req, res, next) {
+    try {
+      const data = await History.findAll({
+        where: {
+          [Op.or]: [
+            { playerOne: +req.params.id },
+            { playerTwo: +req.params.id },
+          ],
+        },
+        include: [
+          {
+            model: User,
+            as: "PlayerOne",
+          },
+          {
+            model: User,
+            as: "PlayerTwo",
+          },
+        ],
       });
+      // const { data: playerOne } = await User.findOne({
+      //   where: { id: +history.playerOne },
+      // });
+      // const { data: playerTwo } = await User.findOne({
+      //   where: { id: +history.playerTwo },
+      // });
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+    // History.findAll({
+    //   where: {
+    //     [Op.or]: [{ playerOne: +req.params.id }, { playerTwo: +req.params.id }],
+    //   },
+    // })
+    //   .then((histories) => {
+    //     console.log("masuk oke");
+    //     if (histories.length === 0)
+    //       throw { name: "NOT_FOUND", message: "data not found" };
+    //     res.status(200).json(histories);
+    //   })
+    //   .catch((err) => {
+    //     console.log("masuk error");
+    //     next(err);
+    //   });
   }
 }
 

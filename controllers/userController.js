@@ -55,8 +55,6 @@ class UserController {
       .catch((err) => next(err));
   }
 
-
-
   static getLeaderboard(req, res, next) {
     User.findAll()
       .then((users) => res.status(200).json(users))
@@ -96,13 +94,11 @@ class UserController {
               pictureUrl: registeredUser.pictureUrl,
               eloRating: registeredUser.eloRating,
             });
-            res
-              .status(201)
-              .json({
-                username: registeredUser.username,
-                email: registeredUser.email,
-                access_token,
-              });
+            res.status(201).json({
+              username: registeredUser.username,
+              email: registeredUser.email,
+              access_token,
+            });
           });
         }
       })
@@ -113,14 +109,15 @@ class UserController {
     let { id, eloRating } = req.body;
 
     try {
+
       let editedUser = await User.update({ eloRating },{
         where: { id },
         returning: true
       })
       if (editedUser[0] == 1) {
-        res.status(200).json(editedUser[1][0])
+        res.status(200).json(editedUser[1][0]);
       } else {
-        throw { name: "NOT_FOUND", message: "data not found" }
+        throw { name: "NOT_FOUND", message: "data not found" };
       }
     } catch (err) {
       console.log(err)
