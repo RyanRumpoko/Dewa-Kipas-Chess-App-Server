@@ -4,6 +4,7 @@ const generateToken = require("../helpers/jwt");
 const { User, sequelize } = require("../models/index");
 
 let access_token = "";
+let idUser = 0;
 
 beforeAll(() => {
   access_token = generateToken({
@@ -50,6 +51,7 @@ describe("register user, route = /users/register", () => {
         expect(res.body).toHaveProperty("id");
         expect(typeof res.body.id).toEqual("number");
         done();
+        idUser = res.body.id
       });
   });
 
@@ -322,25 +324,6 @@ describe("leaderboard user, route = /users/leaderboard", function () {
         done();
       });
   });
-  it("500 failed read users - page not found", function (done) {
-    let body = {
-      testError: true
-    }
-
-    request(app)
-      .get("/users/leaderboard")
-      .send(body)
-      .set('access_token', access_token)
-      .end((err, res) => {
-        if (err) {
-          done(err);
-        }
-        
-        expect(res.status).toEqual(400);
-        expect(typeof res.body).toEqual("object");
-        done();
-      });
-  });
 });
 
 describe("Google login, route = /users/googleLogin", function () {
@@ -414,5 +397,79 @@ describe("Google login, route = /users/googleLogin", function () {
       });
   });
 
+  
+})
+
+describe("Update eloRating, route = /users/updatescore", function () {
+  
+  it("200 success update elorating", function (done) {
+    
+    let body = {
+      id: idUser,
+      eloRating: 10,
+    };
+
+    request(app)
+      .put("/users/updatescore")
+      .set('access_token', access_token)
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(200);
+        expect(typeof res.body).toEqual("object");
+        done();
+      });
+  })
+
+  it("401 dont have acces token", function (done) {
+    
+    let body = {
+      id: idUser,
+      eloRating: 10,
+    };
+
+    request(app)
+      .put("/users/updatescore")
+      // .set('access_token', access_token)
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(401);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  })
+
+  it("404 ID not found", function (done) {
+    
+    let body = {
+      id: 50000000,
+      eloRating: 10,
+    };
+
+    request(app)
+      .put("/users/updatescore")
+      .set('access_token', access_token)
+      .send(body)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        expect(res.status).toEqual(404);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  })
 
 })
