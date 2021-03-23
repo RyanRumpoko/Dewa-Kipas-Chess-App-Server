@@ -56,8 +56,6 @@ class UserController {
   }
 
   static getLeaderboard(req, res, next) {
-    const { testError } = req.body;
-    if (testError) throw { name: "INVALID_DATA", message: "TEST ERROR" };
     User.findAll()
       .then((users) => res.status(200).json(users))
       .catch((err) => {
@@ -80,7 +78,6 @@ class UserController {
             pictureUrl: user.pictureUrl,
             eloRating: user.eloRating,
           });
-          console.log(access_token, "?????????????????????");
           res
             .status(200)
             .json({ username: user.username, email: user.email, access_token });
@@ -90,7 +87,6 @@ class UserController {
             email,
             password: "defaultPassword",
           }).then((registeredUser) => {
-            console.log(registeredUser, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             const access_token = generateToken({
               id: registeredUser.id,
               username: registeredUser.username,
@@ -109,23 +105,23 @@ class UserController {
       .catch((err) => next(err));
   }
 
-  static async putUserScore(req, res) {
+  static async putUserScore(req, res, next) {
     let { id, eloRating } = req.body;
+
     try {
-      let editedUser = await User.update(
-        { eloRating },
-        {
-          where: { id: userid },
-          returning: true,
-        }
-      );
+
+      let editedUser = await User.update({ eloRating },{
+        where: { id },
+        returning: true
+      })
       if (editedUser[0] == 1) {
         res.status(200).json(editedUser[1][0]);
       } else {
         throw { name: "NOT_FOUND", message: "data not found" };
       }
     } catch (err) {
-      next(err);
+      console.log(err)
+      next(err)
     }
   }
 }
