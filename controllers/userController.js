@@ -57,12 +57,12 @@ class UserController {
 
   static getLeaderboard(req, res, next) {
     User.findAll({
-      order: [['eloRating', 'DESC']]
+      order: [["eloRating", "DESC"]],
     })
-    .then((users) => res.status(200).json(users))
-    .catch((err) => {
-      next(err);
-    });
+      .then((users) => res.status(200).json(users))
+      .catch((err) => {
+        next(err);
+      });
   }
   static googleLogin(req, res, next) {
     const { googleId, imageUrl, email, name } = req.body;
@@ -80,6 +80,7 @@ class UserController {
             pictureUrl: user.pictureUrl,
             eloRating: user.eloRating,
           });
+          console.log(access_token, "?????????????????????");
           res
             .status(200)
             .json({ username: user.username, email: user.email, access_token });
@@ -89,6 +90,7 @@ class UserController {
             email,
             password: "defaultPassword",
           }).then((registeredUser) => {
+            console.log(registeredUser, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             const access_token = generateToken({
               id: registeredUser.id,
               username: registeredUser.username,
@@ -107,23 +109,23 @@ class UserController {
       .catch((err) => next(err));
   }
 
-  static async putUserScore(req, res, next) {
+  static async putUserScore(req, res) {
     let { id, eloRating } = req.body;
-
     try {
-
-      let editedUser = await User.update({ eloRating },{
-        where: { id },
-        returning: true
-      })
+      let editedUser = await User.update(
+        { eloRating },
+        {
+          where: { id: userid },
+          returning: true,
+        }
+      );
       if (editedUser[0] == 1) {
         res.status(200).json(editedUser[1][0]);
       } else {
         throw { name: "NOT_FOUND", message: "data not found" };
       }
     } catch (err) {
-      console.log(err)
-      next(err)
+      next(err);
     }
   }
 }

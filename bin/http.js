@@ -61,9 +61,15 @@ io.on("connection", (socket) => {
   });
 
   socket.on("gameOver", function (data) {
-    activeRooms = activeRooms.filter(room => room.roomid !== data.roomid)
+    activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
     console.log(data);
     socket.to(data.roomid).emit("youlose");
+  });
+
+  socket.on("enemyTimeout", function (data) {
+    activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
+    console.log(data);
+    socket.to(data.roomid).emit("youwin");
   });
 
   if (!users[socket.id]) {
@@ -77,7 +83,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callUser", (data) => {
-    console.log(data, 'calluser triggered')
+    console.log(data, "calluser triggered");
     socket.to(data.roomid).emit("hey", {
       signal: data.signalData,
       from: data.from,
@@ -85,7 +91,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("acceptCall", (data) => {
-    console.log(data, 'acceptcall received to server')
+    console.log(data, "acceptcall received to server");
     socket.to(data.roomid).emit("callAccepted", data.signal);
   });
 
