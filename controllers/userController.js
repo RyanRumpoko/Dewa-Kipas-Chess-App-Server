@@ -111,14 +111,13 @@ class UserController {
         }
       })
       .catch((err) => next(err));
-<<<<<<< HEAD
   }
 
   static async putUserScore(req, res) {
     let { id, eloRating } = req.body;
     try {
       let editedUser = await User.update({ eloRating },{
-        where: { id: userid },
+        where: { id },
         returning: true
       })
       if (editedUser[0] == 1) {
@@ -127,10 +126,9 @@ class UserController {
         throw { name: "NOT_FOUND", message: "data not found" }
       }
     } catch (err) {
+      console.log(err)
       next(err)
     }
-=======
->>>>>>> a22e2d85f6c267d872fee72b2d9963a5ab84bda9
   }
 }
 

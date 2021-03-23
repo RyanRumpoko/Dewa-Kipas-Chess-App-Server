@@ -44,12 +44,12 @@ io.on("connection", (socket) => {
 
   socket.on("move", function (data) {
     console.log(data);
-    io.to(data.roomid).emit("enemymove", data);
+    socket.to(data.roomid).emit("enemymove", data);
   });
 
-  socket.on("gameover", function (data) {
+  socket.on("gameOver", function (data) {
     console.log(data);
-    io.to(data.roomid).emit("youlose");
+    socket.to(data.roomid).emit("youlose");
   });
 
   if (!users[socket.id]) {
