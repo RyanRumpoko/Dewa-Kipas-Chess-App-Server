@@ -1,8 +1,18 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const generateToken = require("../helpers/jwt");
-
+const jwt = require("jsonwebtoken");
 class UserController {
+  static async getUser(req, res, next) {
+    try {
+      const token = req.params.access;
+      const data = jwt.verify(token, process.env.SECRET);
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static register(req, res, next) {
     const { username, email, password } = req.body;
     User.create({
