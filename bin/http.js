@@ -96,6 +96,12 @@ io.on("connection", (socket) => {
     socket.to(data.roomid).emit("youwin");
   });
 
+  socket.on("leaveRoom", function (data) {
+    activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
+    console.log(data);
+    socket.to(data.roomid).emit("youwin");
+  })
+
   if (!users[socket.id]) {
     users[socket.id] = socket.id;
   }
