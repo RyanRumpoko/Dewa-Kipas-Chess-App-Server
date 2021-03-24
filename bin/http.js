@@ -3,7 +3,7 @@ const port = process.env.PORT || 4000;
 const http = require("http");
 const socketio = require("socket.io");
 
-const { v4: uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require("uuid");
 const server = http.createServer(app);
 
 const io = socketio(server, {
@@ -14,19 +14,19 @@ const io = socketio(server, {
 });
 
 let activeRooms = []; // isi nya array of object { roomid, playerOne, playerTwo }
-let queueMatchmaking = []
+let queueMatchmaking = [];
 let users = {};
 
 let roomId;
 
 io.on("connection", (socket) => {
-
   socket.on("create-room", function (data) {
     // isinya { roomid: '', playerData }
-    // console.log(data.roomid, "ini roomid nya create room");
+    console.log(data.roomid, "ini roomid nya create room");
     roomId = data.roomid;
     activeRooms.push({ roomid: data.roomid, playerOne: data.playerData });
     socket.join(data.roomid);
+    socket.emit("result", roomId);
   });
 
   socket.on("join-room", function (data) {
@@ -48,20 +48,27 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("matchmaking", function (data) {
-    console.log(data, 'join matchmaking')
-    queueMatchmaking.push({socket, data})
-    if(queueMatchmaking.length % 2 === 0) {
+    console.log(data, "join matchmaking");
+    queueMatchmaking.push({ socket, data });
+    if (queueMatchmaking.length % 2 === 0) {
       setTimeout(() => {
         let uuid = uuidv4();
-        queueMatchmaking.sort((a,b) => b.eloRating - a.eloRating)
-        const indexPlayer = queueMatchmaking.findIndex(user => user.data.id === data.id)
-        socket.join(uuid)
-        queueMatchmaking[indexPlayer - 1].socket.join(uuid)
-        activeRooms.push({ roomid: uuid, playerOne: data, playerTwo: queueMatchmaking[indexPlayer - 1].data });
-        console.log(activeRooms, 'ini isi active rooms')
+        queueMatchmaking.sort((a, b) => b.eloRating - a.eloRating);
+        const indexPlayer = queueMatchmaking.findIndex(
+          (user) => user.data.id === data.id
+        );
+        socket.join(uuid);
+        queueMatchmaking[indexPlayer - 1].socket.join(uuid);
+        activeRooms.push({
+          roomid: uuid,
+          playerOne: data,
+          playerTwo: queueMatchmaking[indexPlayer - 1].data,
+        });
+        console.log(activeRooms, "ini isi active rooms");
         io.to(uuid).emit("matchStart", {
           roomid: uuid,
           playerOne: data,
+
           playerTwo: queueMatchmaking[indexPlayer - 1].data
         })
         console.log(queueMatchmaking, 'ini isi queuematchmaking')
@@ -70,8 +77,7 @@ io.on("connection", (socket) => {
 
       }, 5000);
     }
-    
-  })
+  });
 
   socket.on("move", function (data) {
     console.log(data);
@@ -103,7 +109,7 @@ io.on("connection", (socket) => {
   io.sockets.emit("allUsers", users);
 
   socket.on("disconnect", () => {
-    console.log('player disconnected')
+    console.log("player disconnected");
     delete users[socket.id];
   });
 
@@ -120,6 +126,7 @@ io.on("connection", (socket) => {
     socket.to(data.roomid).emit("callAccepted", data.signal);
   });
 
+
   socket.on("sendEmote", (data) => {
     console.log(data, "<<<<<<< CHECK ROOM ID");
     socket.to(data.roomid).emit("enemyEmoji", data);
@@ -129,5 +136,5 @@ io.on("connection", (socket) => {
 server.listen(port, () => console.log("Running on port: ", port));
 
 module.exports = {
-  server: io
-}
+  server: io,
+};
