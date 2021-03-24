@@ -65,7 +65,9 @@ io.on("connection", (socket) => {
           playerTwo: queueMatchmaking[indexPlayer - 1].data
         })
         console.log(queueMatchmaking, 'ini isi queuematchmaking')
+
         queueMatchmaking.splice(indexPlayer-1, 2)
+
       }, 5000);
     }
     
@@ -112,9 +114,9 @@ io.on("connection", (socket) => {
     socket.to(data.roomid).emit("callAccepted", data.signal);
   });
 
-  socket.on("sendEmot", (data) => {
+  socket.on("sendEmote", (data) => {
     console.log(data, "<<<<<<< CHECK ROOM ID");
-    socket.to(roomId).emit("testing", data);
+    socket.to(data.roomid).emit("enemyEmoji", data);
   });
 });
 
