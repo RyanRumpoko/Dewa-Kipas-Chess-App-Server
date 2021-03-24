@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   socket.on("matchmaking", function (data) {
     console.log(data, "join matchmaking");
     queueMatchmaking.push({ socket, data });
-    console.log(queueMatchmaking, 'ini isi queue')
+    console.log(queueMatchmaking, "ini isi queue");
     if (queueMatchmaking.length % 2 === 0) {
       setTimeout(() => {
         let uuid = uuidv4().substring(0, 7);
@@ -59,11 +59,11 @@ io.on("connection", (socket) => {
           (user) => user.data.id === data.id
         );
         socket.join(uuid);
-        let indexenemy
-        if (indexPlayer % 2 === 1 ){
-          indexenemy = indexPlayer - 1
+        let indexenemy;
+        if (indexPlayer % 2 === 1) {
+          indexenemy = indexPlayer - 1;
         } else {
-          indexenemy = indexPlayer + 1
+          indexenemy = indexPlayer + 1;
         }
         queueMatchmaking[indexenemy].socket.join(uuid);
 
@@ -76,15 +76,17 @@ io.on("connection", (socket) => {
         io.to(uuid).emit("matchStart", {
           roomid: uuid,
           playerOne: data,
-          playerTwo: queueMatchmaking[indexenemy].data
-        })
+          playerTwo: queueMatchmaking[indexenemy].data,
+        });
         if (indexPlayer % 2 === 1) {
-          queueMatchmaking.splice(indexenemy, 2)
+          queueMatchmaking.splice(indexenemy, 2);
         } else {
-          queueMatchmaking.splice(indexPlayer, 2)
+          queueMatchmaking.splice(indexPlayer, 2);
         }
-        console.log(queueMatchmaking, 'ini isi queuematchmaking stelah masuk room')
-
+        console.log(
+          queueMatchmaking,
+          "ini isi queuematchmaking stelah masuk room"
+        );
       }, 5000);
     }
   });
@@ -116,7 +118,7 @@ io.on("connection", (socket) => {
     activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
     console.log(data);
     socket.to(data.roomid).emit("youwin");
-  })
+  });
 
   if (!users[socket.id]) {
     users[socket.id] = socket.id;
@@ -134,6 +136,7 @@ io.on("connection", (socket) => {
     socket.to(data.roomid).emit("hey", {
       signal: data.signalData,
       from: data.from,
+      callerUsername: data.callerUsername,
     });
   });
 
@@ -141,7 +144,6 @@ io.on("connection", (socket) => {
     console.log(data, "acceptcall received to server");
     socket.to(data.roomid).emit("callAccepted", data.signal);
   });
-
 
   socket.on("sendEmote", (data) => {
     console.log(data, "<<<<<<< CHECK ROOM ID");
