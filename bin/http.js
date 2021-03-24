@@ -68,10 +68,13 @@ io.on("connection", (socket) => {
         io.to(uuid).emit("matchStart", {
           roomid: uuid,
           playerOne: data,
-          playerTwo: queueMatchmaking[indexPlayer - 1].data,
-        });
-        console.log(queueMatchmaking, "ini isi queuematchmaking");
-        queueMatchmaking.splice(indexPlayer - 1, 2);
+
+          playerTwo: queueMatchmaking[indexPlayer - 1].data
+        })
+        console.log(queueMatchmaking, 'ini isi queuematchmaking')
+
+        queueMatchmaking.splice(indexPlayer-1, 2)
+
       }, 5000);
     }
   });
@@ -116,16 +119,11 @@ io.on("connection", (socket) => {
     console.log(data, "acceptcall received to server");
     socket.to(data.roomid).emit("callAccepted", data.signal);
   });
-  socket.on("leave-room", (data) => {
-    socket.leave(data);
-    socket.on("disconnect", () => {
-      console.log("player disconnected");
-      delete users[socket.id];
-    });
-  });
-  socket.on("sendEmot", (data) => {
+
+
+  socket.on("sendEmote", (data) => {
     console.log(data, "<<<<<<< CHECK ROOM ID");
-    socket.to(roomId).emit("testing", data);
+    socket.to(data.roomid).emit("enemyEmoji", data);
   });
 });
 
