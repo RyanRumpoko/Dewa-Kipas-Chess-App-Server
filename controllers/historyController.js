@@ -51,7 +51,7 @@ class HistoryController {
       // const { data: playerTwo } = await User.findOne({
       //   where: { id: +history.playerTwo },
       // });
-      res.status(200).json(data);
+      res.status(200).json(data.reverse());
     } catch (err) {
       next(err);
     }

@@ -50,6 +50,7 @@ io.on("connection", (socket) => {
   socket.on("matchmaking", function (data) {
     console.log(data, "join matchmaking");
     queueMatchmaking.push({ socket, data });
+    console.log(queueMatchmaking, 'ini isi queue')
     if (queueMatchmaking.length % 2 === 0) {
       setTimeout(() => {
         let uuid = uuidv4();
@@ -58,22 +59,31 @@ io.on("connection", (socket) => {
           (user) => user.data.id === data.id
         );
         socket.join(uuid);
-        queueMatchmaking[indexPlayer - 1].socket.join(uuid);
+        let indexenemy
+        if (indexPlayer % 2 === 1 ){
+          indexenemy = indexPlayer - 1
+        } else {
+          indexenemy = indexPlayer + 1
+        }
+        queueMatchmaking[indexenemy].socket.join(uuid);
+
         activeRooms.push({
           roomid: uuid,
           playerOne: data,
-          playerTwo: queueMatchmaking[indexPlayer - 1].data,
+          playerTwo: queueMatchmaking[indexenemy].data,
         });
         console.log(activeRooms, "ini isi active rooms");
         io.to(uuid).emit("matchStart", {
           roomid: uuid,
           playerOne: data,
-
-          playerTwo: queueMatchmaking[indexPlayer - 1].data
+          playerTwo: queueMatchmaking[indexenemy].data
         })
-        console.log(queueMatchmaking, 'ini isi queuematchmaking')
-
-        queueMatchmaking.splice(indexPlayer-1, 2)
+        if (indexPlayer % 2 === 1) {
+          queueMatchmaking.splice(indexenemy, 2)
+        } else {
+          queueMatchmaking.splice(indexPlayer, 2)
+        }
+        console.log(queueMatchmaking, 'ini isi queuematchmaking stelah masuk room')
 
       }, 5000);
     }
@@ -88,6 +98,12 @@ io.on("connection", (socket) => {
     activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
     console.log(data);
     socket.to(data.roomid).emit("youlose");
+  });
+
+  socket.on("stalemate", function (data) {
+    activeRooms = activeRooms.filter((room) => room.roomid !== data.roomid);
+    console.log(data);
+    socket.to(data.roomid).emit("onStalemate");
   });
 
   socket.on("enemyTimeout", function (data) {
