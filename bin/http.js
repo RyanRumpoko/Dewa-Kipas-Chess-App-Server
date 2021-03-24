@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
     queueMatchmaking.push({ socket, data });
     if (queueMatchmaking.length % 2 === 0) {
       setTimeout(() => {
-        let uuid = uuidv4();
+        let uuid = uuidv4().substring(0, 7);
         queueMatchmaking.sort((a, b) => b.eloRating - a.eloRating);
         const indexPlayer = queueMatchmaking.findIndex(
           (user) => user.data.id === data.id
