@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "https://server-chess-dewa-kipas.herokuapp.com/",
+    origin: "https://chess-dewa-kipas.web.app/",
     credentials: true,
   },
 });
