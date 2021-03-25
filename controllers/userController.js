@@ -129,7 +129,7 @@ class UserController {
     let { id, eloRating } = req.body;
     try {
       let editedUser = await User.update(
-        { eloRating },
+        { eloRating: +eloRating },
         {
           where: { id },
           returning: true,
