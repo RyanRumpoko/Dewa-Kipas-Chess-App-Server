@@ -7,6 +7,6 @@ router.post("/login", UserController.login);
 router.post("/googlelogin", UserController.googleLogin);
 router.get("/leaderboard", authenticate, UserController.getLeaderboard);
 router.put("/updatescore", authenticate, UserController.putUserScore);
-router.get("/:access", UserController.getUser);
+router.get("/:id", UserController.getUser);
 
 module.exports = router;
