@@ -1,11 +1,13 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const generateToken = require("../helpers/jwt");
+const jwt = require("jsonwebtoken");
 class UserController {
   static async getUser(req, res, next) {
     try {
-      const id = +req.params.id;
-      const response = await User.findOne({ where: { id } });
+      const token = req.params.token;
+      const user = jwt.verify(token, process.env.SECRET);
+      const response = await User.findOne({ where: { id: user.id } });
       console.log(response, "<<<<< RESPONSE");
       res.status(200).json(response);
     } catch (err) {
@@ -125,7 +127,7 @@ class UserController {
       .catch((err) => next(err));
   }
 
-  static async putUserScore(req, res) {
+  static async putUserScore(req, res, next) {
     let { id, eloRating } = req.body;
     try {
       let editedUser = await User.update(

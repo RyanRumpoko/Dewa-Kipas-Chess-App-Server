@@ -7,6 +7,10 @@ const { v4: uuidv4 } = require("uuid");
 const server = http.createServer(app);
 
 const io = socketio(server, {
+  // cors: {
+  //   origin: "http://localhost:3000",
+  //   credentials: true,
+  // },
   cors: {
     origin: "https://chess-dewa-kipas.web.app",
     credentials: true,
@@ -35,10 +39,18 @@ io.on("connection", (socket) => {
     const selectedRoom = activeRooms.find(
       (datum) => datum.roomid === data.roomid
     );
-    if (selectedRoom) {
+    const ManyKeysRoom = Object.keys(selectedRoom);
+    if (ManyKeysRoom.length === 3) {
+      // const newRoom = uuidv4().substring(0, 7);
+      // roomId = newRoom;
+      // activeRooms.push({ roomid: newRoom, playerOne: data.playerData });
+      // socket.join(newRoom);
+      // socket.emit("result", newRoom);
+      socket.emit("fullRoom");
+    } else if (selectedRoom) {
       selectedRoom.playerTwo = data.playerData;
       roomId = selectedRoom.roomid;
-      console.log(selectedRoom);
+      console.log(selectedRoom, "<<<<<SELECTD ROOM");
       socket.join(data.roomid);
       io.to(data.roomid).emit("fullroom", { selectedRoom });
     } else {
