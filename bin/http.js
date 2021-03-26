@@ -65,44 +65,54 @@ io.on("connection", (socket) => {
     console.log(queueMatchmaking, "ini isi queue");
     if (queueMatchmaking.length % 2 === 0) {
       setTimeout(() => {
-        let uuid = uuidv4().substring(0, 7);
-        queueMatchmaking.sort((a, b) => b.eloRating - a.eloRating);
-        const indexPlayer = queueMatchmaking.findIndex(
-          (user) => user.data.id === data.id
-        );
-        socket.join(uuid);
-        let indexenemy;
-        if (indexPlayer % 2 === 1) {
-          indexenemy = indexPlayer - 1;
-        } else {
-          indexenemy = indexPlayer + 1;
-        }
-        queueMatchmaking[indexenemy].socket.join(uuid);
+        if (
+          queueMatchmaking.findIndex((user) => user.data.id === data.id) !== -1
+        ) {
+          let uuid = uuidv4().substring(0, 7);
+          queueMatchmaking.sort((a, b) => b.eloRating - a.eloRating);
+          const indexPlayer = queueMatchmaking.findIndex(
+            (user) => user.data.id === data.id
+          );
+          socket.join(uuid);
+          let indexenemy;
+          if (indexPlayer % 2 === 1) {
+            indexenemy = indexPlayer - 1;
+          } else {
+            indexenemy = indexPlayer + 1;
+          }
+          queueMatchmaking[indexenemy].socket.join(uuid);
 
-        activeRooms.push({
-          roomid: uuid,
-          playerOne: data,
-          playerTwo: queueMatchmaking[indexenemy].data,
-        });
-        console.log(activeRooms, "ini isi active rooms");
-        io.to(uuid).emit("matchStart", {
-          roomid: uuid,
-          playerOne: data,
-          playerTwo: queueMatchmaking[indexenemy].data,
-        });
-        if (indexPlayer % 2 === 1) {
-          queueMatchmaking.splice(indexenemy, 2);
-        } else {
-          queueMatchmaking.splice(indexPlayer, 2);
+          activeRooms.push({
+            roomid: uuid,
+            playerOne: data,
+            playerTwo: queueMatchmaking[indexenemy].data,
+          });
+          console.log(activeRooms, "ini isi active rooms");
+          io.to(uuid).emit("matchStart", {
+            roomid: uuid,
+            playerOne: data,
+            playerTwo: queueMatchmaking[indexenemy].data,
+          });
+          if (indexPlayer % 2 === 1) {
+            queueMatchmaking.splice(indexenemy, 2);
+          } else {
+            queueMatchmaking.splice(indexPlayer, 2);
+          }
+          console.log(
+            queueMatchmaking,
+            "ini isi queuematchmaking stelah masuk room"
+          );
         }
-        console.log(
-          queueMatchmaking,
-          "ini isi queuematchmaking stelah masuk room"
-        );
       }, 5000);
     }
   });
-
+  socket.on("cancelMatchmaking", (data) => {
+    const indexPlayer = queueMatchmaking.findIndex(
+      (user) => user.data.id === data.id
+    );
+    queueMatchmaking.splice(indexPlayer, 1);
+    console.log("Cancel matchmaking", queueMatchmaking, "<<<<<<<<");
+  });
   socket.on("move", function (data) {
     console.log(data);
     socket.to(data.roomid).emit("enemymove", data); // exclude sender
