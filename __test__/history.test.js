@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../app");
 const UserController = require("../controllers/userController");
 const generateToken = require("../helpers/jwt");
-const { User, sequelize }= require ('../models/index')
+const { User, sequelize } = require("../models/index");
 
 let access_token = "";
 let id1 = 0;
@@ -29,33 +29,28 @@ describe("add history route = /histories", function () {
       eloRating: 0,
     });
     return User.create({
-      username: 'player 1',
-      email: 'player1@mail.com',
-      password: 'password1',
+      username: "player 1",
+      email: "player1@mail.com",
+      password: "password1",
     })
-    .then(user => {
-      console.log(user, 'ini harusnya res user1')
-      id1 = user.id
-      return User.create({
-        username: 'player 2',
-        email: 'player2@mail.com',
-        password: 'password2',
+      .then((user) => {
+        id1 = user.id;
+        return User.create({
+          username: "player 2",
+          email: "player2@mail.com",
+          password: "password2",
+        });
       })
-    })
-    .then(user2 => {
-      console.log(user2, 'ini harusnya res user2')
-      id2 = user2.id
-      // done()
-    })
-    .catch (err => {
-      console.log(err)
-      // done(err);
-    })
-  })
-  
-  
+      .then((user2) => {
+        id2 = user2.id;
+        // done()
+      })
+      .catch((err) => {
+        // done(err);
+      });
+  });
+
   it("201 success add history", function (done) {
-    console.log(id1, id2, 'ini id') 
     let body = {
       playerOne: id1,
       playerTwo: id2,
@@ -105,15 +100,17 @@ describe("add history route = /histories", function () {
         expect(res.status).toEqual(401);
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
+        expect(res.body).toHaveProperty("message");
         expect(typeof res.body.error).toEqual("string");
+        expect(typeof res.body.message).toEqual("string")
         done();
       });
   });
 
   it("400 failed add history - empty player", function (done) {
     const body = {
-      playerOne: null,
-      playerTwo: null,
+      playerOne: "",
+      playerTwo: "",
       status: 1,
     };
 
@@ -130,14 +127,14 @@ describe("add history route = /histories", function () {
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");
-        expect(typeof res.body.message).toEqual("string");
+        expect(typeof res.body.message).toEqual("object");
         done();
       });
   });
 
   it("400 failed add history - empty player one", function (done) {
     const body = {
-      playerOne: null,
+      playerOne: "",
       playerTwo: id2,
       status: 1,
     };
@@ -162,7 +159,7 @@ describe("add history route = /histories", function () {
   it("400 failed add history - empty player two", function (done) {
     const body = {
       playerOne: id1,
-      playerTwo: null,
+      playerTwo: "",
       status: 1,
     };
 
@@ -187,7 +184,7 @@ describe("add history route = /histories", function () {
     const body = {
       playerOne: id1,
       playerTwo: id2,
-      status: null,
+      status: "",
     };
 
     request(app)
@@ -209,19 +206,47 @@ describe("add history route = /histories", function () {
 });
 
 describe("read history by id route = /histories/:id", function () {
+  beforeAll(() => {
+    access_token = generateToken({
+      id: 3,
+      username: "adminaja",
+      email: "admin@mail.com",
+      pictureUrl: "images.jpg",
+      eloRating: 0,
+    });
+    return User.create({
+      username: "player 1",
+      email: "player1@mail.com",
+      password: "password1",
+    })
+      .then((user) => {
+        id1 = user.id;
+        return User.create({
+          username: "player 2",
+          email: "player2@mail.com",
+          password: "password2",
+        });
+      })
+      .then((user2) => {
+        id2 = user2.id;
+        // done()
+      })
+      .catch((err) => {
+        // done(err);
+      });
+  });
   it("200 success read history by id player", function (done) {
-    console.log(id1, 'ini id1 coba read historyy')
-    console.log(access_token, 'ini access_token coba read historyy')
+    
     request(app)
       .get(`/histories/${id1}`)
       .set("access_token", access_token)
       .send()
       .end((err, res) => {
         if (err) {
-          console.log(err, 'ini error read history')
+          
           done(err);
         }
-        console.log(res, 'ini res read history harus sukses')
+        
         expect(res.status).toEqual(200);
         expect(Array.isArray(res.body)).toEqual(true);
         done();
@@ -244,6 +269,23 @@ describe("read history by id route = /histories/:id", function () {
           done(err);
         }
         expect(res.status).toEqual(401);
+        expect(typeof res.body).toEqual("object");
+        expect(res.body).toHaveProperty("error");
+        expect(typeof res.body.error).toEqual("string");
+        done();
+      });
+  });
+
+  it("500 failed read history - id not valid", function (done) {
+
+    request(app)
+      .get(`/histories/adsaf`)
+      .set("access_token", access_token)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        expect(res.status).toEqual(500);
         expect(typeof res.body).toEqual("object");
         expect(res.body).toHaveProperty("error");
         expect(typeof res.body.error).toEqual("string");

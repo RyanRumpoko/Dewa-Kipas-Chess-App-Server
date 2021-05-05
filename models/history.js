@@ -9,17 +9,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      History.belongsTo(models.User, { foreignKey: 'playerOne'});
-      History.belongsTo(models.User, { foreignKey: 'playerTwo'});
+      History.belongsTo(models.User, {
+        foreignKey: "playerOne",
+        as: "PlayerOne",
+      });
+      History.belongsTo(models.User, {
+        foreignKey: "playerTwo",
+        as: "PlayerTwo",
+      });
     }
   }
   History.init(
     {
       playerOne: {
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Status cannot be empty",
+          },
+        },
       },
       playerTwo: {
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Status cannot be empty",
+          },
+        },
       },
       status: {
         type: DataTypes.INTEGER,
